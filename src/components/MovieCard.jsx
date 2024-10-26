@@ -7,8 +7,14 @@ import { MovieContext } from "../context";
 const MovieCard = ({ movieData }) => {
   const [showModal, setShowModal] = useState(false);
   const { cartData, setCartData } = useContext(MovieContext);
-  const handleAddToCart = (newMovieData) => {
-    setCartData((prev) => [...prev, newMovieData]);
+  const handleAddToCart = (e, newMovieData) => {
+    e.stopPropagation();
+    const isExist = cartData.find((cart) => cart.id === newMovieData.id);
+    if (isExist) {
+      alert("movie is already added!!");
+    } else {
+      setCartData((prev) => [...prev, newMovieData]);
+    }
   };
 
   console.log(cartData, "this is the cart data which is shown");
@@ -16,7 +22,7 @@ const MovieCard = ({ movieData }) => {
   return (
     <>
       {showModal && (
-        <MovieDetailsModal movieData={movieData} setShowModal={setShowModal} />
+        <MovieDetailsModal movieData={movieData} setShowModal={setShowModal} handleAddToCart={handleAddToCart} />
       )}
       <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
         <a href="#" onClick={() => setShowModal(true)}>
@@ -31,15 +37,15 @@ const MovieCard = ({ movieData }) => {
             <div className="flex items-center space-x-1 mb-5">
               <Ratting value={movieData?.rating} />
             </div>
+            <button
+              onClick={(e) => handleAddToCart(e, movieData)}
+              className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
+            >
+              <img src="./assets/tag.svg" alt="" />
+              <span>${movieData?.price} | Add to Cart</span>
+            </button>
           </figcaption>
         </a>
-        <button
-          onClick={() => handleAddToCart(movieData)}
-          className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
-        >
-          <img src="./assets/tag.svg" alt="" />
-          <span>${movieData?.price} | Add to Cart</span>
-        </button>
       </figure>
     </>
   );

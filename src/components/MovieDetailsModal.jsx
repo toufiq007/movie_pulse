@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { getImageUrl } from "../utils/utils";
 
-const MovieDetailsModal = ({ setShowModal, movieData }) => {
+const MovieDetailsModal = ({ setShowModal, movieData, handleAddToCart }) => {
   return (
     <>
       <div className="fixed top-0 left-0 w-screen h-screen z-50 bg-black/60 backdrop-blur-sm">
@@ -26,7 +26,10 @@ const MovieDetailsModal = ({ setShowModal, movieData }) => {
                 {movieData?.description}
               </p>
               <div className="grid lg:grid-cols-2 gap-2">
-                <button className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm">
+                <button
+                  onClick={(e) => handleAddToCart(e, movieData)}
+                  className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
+                >
                   <img src="./assets/tag.svg" alt="" />
                   <span>${movieData?.price} | Add to Cart</span>
                 </button>
