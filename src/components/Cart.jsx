@@ -6,10 +6,10 @@ import { getImageUrl } from "../utils/utils";
 
 /* eslint-disable react/prop-types */
 const Cart = ({ setShowCart }) => {
-  const { cartData, setCartData } = useContext(MovieContext);
+  const { state, dispatch } = useContext(MovieContext);
   const handleRemoveCart = (id) => {
-    const newCartData = cartData.filter((cart) => cart.id !== id);
-    setCartData(newCartData);
+    // const newCartData = cartData.filter((cart) => cart.id !== id);
+    dispatch({ type: "REMOVE_FROM_CART", payload: { id } });
   };
   return (
     <>
@@ -20,8 +20,8 @@ const Cart = ({ setShowCart }) => {
               Your Carts
             </h2>
             <div className="space-y-8 lg:space-y-12 max-h-[450px] overflow-auto mb-10 lg:mb-14">
-              {cartData?.length > 0 ? (
-                cartData?.map((cart) => (
+              {state.cartData?.length > 0 ? (
+                state.cartData?.map((cart) => (
                   <div
                     key={cart.id}
                     className="grid grid-cols-[1fr_auto] gap-4"

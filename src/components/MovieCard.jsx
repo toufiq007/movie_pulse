@@ -6,23 +6,30 @@ import MovieDetailsModal from "./MovieDetailsModal";
 import { MovieContext } from "../context";
 const MovieCard = ({ movieData }) => {
   const [showModal, setShowModal] = useState(false);
-  const { cartData, setCartData } = useContext(MovieContext);
+  const { state, dispatch } = useContext(MovieContext);
   const handleAddToCart = (e, newMovieData) => {
     e.stopPropagation();
-    const isExist = cartData.find((cart) => cart.id === newMovieData.id);
+    const isExist = state?.cartData?.find(
+      (cart) => cart.id === newMovieData.id
+    );
     if (isExist) {
       alert("movie is already added!!");
     } else {
-      setCartData((prev) => [...prev, newMovieData]);
+      dispatch({ type: "ADD_TO_CART", payload: { ...newMovieData } });
+      // setCartData((prev) => [...prev, newMovieData]);
     }
   };
 
-  console.log(cartData, "this is the cart data which is shown");
+  // console.log(cartData, "this is the cart data which is shown");
 
   return (
     <>
       {showModal && (
-        <MovieDetailsModal movieData={movieData} setShowModal={setShowModal} handleAddToCart={handleAddToCart} />
+        <MovieDetailsModal
+          movieData={movieData}
+          setShowModal={setShowModal}
+          handleAddToCart={handleAddToCart}
+        />
       )}
       <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
         <a href="#" onClick={() => setShowModal(true)}>
