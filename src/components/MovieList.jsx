@@ -12,7 +12,6 @@ const MovieList = () => {
           {movies.map((movie) => (
             <MovieCard key={movie.id} movieData={movie} />
           ))}
-         
         </div>
       </div>
     </>
