@@ -2,12 +2,14 @@ import Logo from "../assets/assets/logo.svg";
 import Ring from "../assets/assets/ring.svg";
 import Moon from "../assets/assets/icons/moon.svg";
 import ShoppingCart from "../assets/assets/shopping-cart.svg";
+import Sun from "../assets/assets/icons/sun.svg";
 import { useContext, useState } from "react";
 import Cart from "./Cart";
-import { MovieContext } from "../context";
+import { MovieContext, ThemeContext } from "../context";
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
   const { cartData } = useContext(MovieContext);
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
   return (
     <>
       <header>
@@ -27,11 +29,30 @@ const Header = () => {
               </a>
             </li>
             <li>
-              <a
+              {/* {
+                darkMode ?  <a
                 className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block"
                 href="#"
               >
                 <img src={Moon} width="24" height="24" alt="" />
+              </a> :  <a
+                className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block"
+                href="#"
+              >
+                <img src={Sun} width="24" height="24" alt="" />
+              </a>
+              } */}
+              <a
+                className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block"
+                href="#"
+                onClick={() => setDarkMode(!darkMode)}
+              >
+                <img
+                  src={darkMode ? Sun : Moon}
+                  width="24"
+                  height="24"
+                  alt=""
+                />
               </a>
             </li>
             <li>
