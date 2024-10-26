@@ -1,9 +1,13 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 import { getImageUrl } from "../utils/utils";
 import Ratting from "./Ratting";
+import MovieDetailsModal from "./MovieDetailsModal";
 const MovieCard = ({ movieData }) => {
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
+      {showModal && <MovieDetailsModal movieData={movieData} setShowModal={setShowModal} />}
       <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
         <img
           className="w-full object-cover"
@@ -16,13 +20,13 @@ const MovieCard = ({ movieData }) => {
           <div className="flex items-center space-x-1 mb-5">
             <Ratting value={movieData?.rating} />
           </div>
-          <a
+          <button
             className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
-            href="#"
+            onClick={() => setShowModal(true)}
           >
             <img src="./assets/tag.svg" alt="" />
             <span>${movieData?.price} | Add to Cart</span>
-          </a>
+          </button>
         </figcaption>
       </figure>
     </>
