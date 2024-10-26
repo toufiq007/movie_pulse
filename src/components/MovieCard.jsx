@@ -4,6 +4,7 @@ import { getImageUrl } from "../utils/utils";
 import Ratting from "./Ratting";
 import MovieDetailsModal from "./MovieDetailsModal";
 import { MovieContext } from "../context";
+import { toast } from "react-toastify";
 const MovieCard = ({ movieData }) => {
   const [showModal, setShowModal] = useState(false);
   const { state, dispatch } = useContext(MovieContext);
@@ -13,10 +14,12 @@ const MovieCard = ({ movieData }) => {
       (cart) => cart.id === newMovieData.id
     );
     if (isExist) {
-      alert("movie is already added!!");
+      toast.error(
+        `The movie ${movieData.title} has been added to the cart already`
+      );
     } else {
       dispatch({ type: "ADD_TO_CART", payload: { ...newMovieData } });
-      // setCartData((prev) => [...prev, newMovieData]);
+      toast.success(`Added  ${movieData.title} to Cart !`);
     }
   };
 
